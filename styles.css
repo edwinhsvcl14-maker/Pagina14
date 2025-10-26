@@ -1,4 +1,4 @@
-/* VARIABLES DE COLOR Y FUENTE (Para referencia) */
+/* VARIABLES DE COLOR Y FUENTE (ACTUALIZADAS con Dorado) */
 :root {
     /* Degradado de marrón a crema */
     --color-marron-oscuro: #5D4037; 
@@ -9,9 +9,15 @@
     --marron-medio: #795548;
 
     /* Colores base de la interfaz */
-    --color-fondo-principal: var(--color-marron-oscuro); /* Se mantiene como base */
+    --color-fondo-principal: var(--color-marron-oscuro); 
     --color-texto-principal: var(--color-crema);        
-    /* ... otras variables ... */
+    --color-texto-secundario: #3e2723;                  /* Marrón más oscuro para textos en fondos claros */
+    
+    /* --- CAMBIO CRÍTICO: ACENTO DORADO/AMARILLO OCRE --- */
+    --color-acento: #FFC300;                           /* Dorado Ocre */
+    --color-acento-hover: #FFD700;                     /* Dorado más brillante en hover */
+    
+    --font-stack: 'Poppins', sans-serif;
 }
 
 /* ESTILOS GLOBALES Y FONDO DEGRADADO */
@@ -397,8 +403,8 @@ body {
 }
 
 .btn-more {
-    background-color: var(--color-acento);
-    color: var(--color-texto-principal);
+    background-color: var(--color-acento); /* **DORADO** */
+    color: var(--color-texto-secundario); /* Texto marrón para contraste */
     padding: 12px 25px;
     border-radius: 4px;
 }
@@ -439,14 +445,14 @@ body {
 }
 
 .directivo-card:hover {
-    /* Efecto: Salto Sutil hacia arriba */
+    /* Efecto de salto y sombra (ya implementado) */
     transform: translateY(-8px); 
-    
-    /* **EFECTO MEJORADO: SOMBRA DE ELEVACIÓN Y BRILLO** */
-    /* La sombra combina la profundidad (negro) y el brillo (crema) */
     box-shadow: 
-        0 15px 30px rgba(0, 0, 0, 0.5), /* Sombra oscura para profundidad */
-        0 0 10px 2px rgba(245, 245, 220, 0.4); /* Brillo suave color crema */
+        0 15px 30px rgba(0, 0, 0, 0.5), 
+        0 0 10px 2px rgba(245, 245, 220, 0.4);
+        
+    /* --- CAMBIO DE COLOR DEL TEXTO EN HOVER A DORADO --- */
+    color: var(--color-acento); /* Ahora el texto se vuelve Dorado */
 }
 
 .directivo-photo {
