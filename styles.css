@@ -359,11 +359,131 @@ body {
 }
 
 /* ============ FOOTER ============ */
+/* ============ FOOTER MEJORADO AL 1000% ============ */
 .footer {
-    padding: 40px 5%;
-    text-align: center;
+    padding: 60px 5% 0; /* Más padding arriba */
     background-color: var(--color-crema); 
-    color: var(--color-texto-secundario); 
+    color: var(--color-texto-secundario); /* Texto marrón oscuro para contraste con fondo crema */
+    border-top: 5px solid var(--color-marron-oscuro); /* Línea de separación sólida */
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Estructura: Info | Links | Social */
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer-column h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-marron-oscuro);
+}
+
+.info-column {
+    font-size: 0.95rem;
+}
+
+.footer-logo {
+    font-size: 1.6rem; /* Logo más grande */
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--color-marron-oscuro);
+}
+
+.footer-copy {
+    margin-bottom: 10px;
+}
+
+.contact-link {
+    color: var(--color-texto-secundario);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.contact-link:hover {
+    color: var(--color-marron-oscuro);
+}
+
+.footer-icon {
+    margin-right: 8px;
+    color: var(--color-marron-oscuro);
+}
+
+/* Enlaces de Columna */
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links a {
+    color: var(--color-texto-secundario);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--color-marron-oscuro);
+    text-decoration: underline;
+}
+
+
+/* Iconos Sociales */
+.social-icons {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: var(--color-marron-oscuro);
+    font-size: 1.8rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--color-acento); /* Color de acento azul en hover */
+    transform: scale(1.1);
+}
+
+/* Sección de Derechos de Autor (Bottom) */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+}
+.footer-copy-final {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* ============ RESPONSIVE FOOTER ============ */
+@media (max-width: 768px) {
+    .footer-content {
+        /* Pasa a una sola columna apilada */
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+    .info-column {
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .social-icons {
+        justify-content: center; /* Centra los iconos en móvil */
+        margin-top: 15px;
+    }
+
+    .footer-links {
+        align-items: center; /* Centra los enlaces */
+    }
 }
 
 /* ============ RESPONSIVE DESIGN ============ */
