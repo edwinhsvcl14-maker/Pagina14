@@ -1,1 +1,278 @@
+/* VARIABLES DE COLOR */
+:root {
+    /* Degradado de marrón a crema */
+    --color-marron-oscuro: #5D4037; /* Marrón más oscuro */
+    --color-crema: #F5F5DC;      /* Beige o Crema */
+    
+    /* Colores de interfaz (simulando apps de streaming) */
+    --color-texto-claro: #F0F0F0;
+    --color-texto-principal: #FFFFFF;
+    --color-acento: #007bff; /* Azul vibrante (como botón de suscripción) */
+    --color-acento-hover: #0056b3;
+    --color-fondo-tarjeta: rgba(0, 0, 0, 0.4);
+}
 
+/* ESTILOS GLOBALES Y FONDO DEGRADADO */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-texto-claro);
+    min-height: 100vh;
+    /* --- FONDO DEGRADADO REQUERIDO: MARRÓN A CREMA --- */
+    background: linear-gradient(180deg, var(--color-marron-oscuro) 0%, var(--color-crema) 100%);
+    /* Asegura que el texto en la parte clara sea legible */
+    color: var(--color-marron-oscuro); 
+}
+
+/* ESTRUCTURA DEL ENCABEZADO (HEADER) */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-texto-principal);
+}
+
+.nav-link {
+    color: var(--color-texto-principal);
+    text-decoration: none;
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #999;
+}
+
+.btn-subscribe {
+    background-color: var(--color-acento);
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: var(--color-acento-hover);
+}
+
+/* SECCIÓN PRINCIPAL (HERO) */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 5% 50px; /* Ajusta padding para el header fijo */
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 700px;
+    color: var(--color-texto-principal);
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para que el texto resalte */
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.cta-text {
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.email-form {
+    display: flex;
+    margin: 20px 0;
+}
+
+.email-form input[type="email"] {
+    flex-grow: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+}
+
+.btn-main {
+    background-color: var(--color-acento);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-main:hover {
+    background-color: var(--color-acento-hover);
+}
+
+.terms {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* SECCIÓN DE CONTENIDO (SHOWCASE) */
+.content-showcase {
+    padding: 50px 5%;
+    text-align: center;
+    color: var(--color-marron-oscuro); /* Texto más oscuro para la parte clara del fondo */
+}
+
+.content-showcase h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en desktop */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--color-fondo-tarjeta);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-placeholder {
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-texto-principal);
+    font-weight: bold;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: var(--color-texto-principal);
+}
+
+/* PIE DE PÁGINA (FOOTER) */
+.footer {
+    background-color: var(--color-marron-oscuro);
+    color: var(--color-crema);
+    padding: 30px 5%;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-links a {
+    color: var(--color-crema);
+    margin: 0 10px;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.footer-links a:hover {
+    opacity: 0.7;
+}
+
+.footer p {
+    margin-top: 15px;
+}
+
+/* --- DISEÑO RESPONSIVE (ADAPTACIÓN A MÓVILES) --- */
+
+/* Para tablets (pantallas hasta 992px) */
+@media (max-width: 992px) {
+    .showcase-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    }
+}
+
+/* Para móviles (pantallas hasta 600px) */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px 5%;
+        position: static; /* Quita el fixed en móvil para mejor navegación */
+    }
+
+    .nav {
+        margin-top: 10px;
+    }
+
+    .nav-link {
+        margin: 0 5px;
+        font-size: 0.9rem;
+    }
+
+    .btn-subscribe {
+        display: block;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .email-form {
+        flex-direction: column; /* Apila el input y el botón */
+    }
+
+    .email-form input[type="email"],
+    .btn-main {
+        width: 100%;
+        border-radius: 5px; /* Bordes redondeados completos */
+        margin-bottom: 10px;
+    }
+
+    .btn-main {
+        padding: 12px;
+    }
+    
+    .showcase-grid {
+        grid-template-columns: 1fr; /* 1 columna */
+    }
+
+    .footer-links a {
+        display: block;
+        margin: 5px 0;
+    }
+}
