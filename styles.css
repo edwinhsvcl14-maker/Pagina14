@@ -51,13 +51,13 @@ body {
 
 /* ============ HEADER ============ */
 
-/* ============ HEADER MEJORADO ============ */
+/* ============ HEADER MEJORADO (CON BARRA MÁS ANCHA) ============ */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 5%; 
-    min-height: 90px; 
+    min-height: 110px; /* **AUMENTO DE ALTURA (MÁS ANCHA)** */
     position: fixed;
     top: 0;
     left: 0;
@@ -81,7 +81,6 @@ body {
 .logo-text-group {
     display: flex;
     flex-direction: column;
-    /* --- CAMBIO 1: CENTRAR TODO EL TEXTO --- */
     align-items: center; 
 }
 
@@ -89,22 +88,22 @@ body {
     font-size: 1.6rem; 
     font-weight: 700;
     color: var(--color-texto-principal);
-    letter-spacing: 2px; /* Ligeramente más espaciado para la elegancia */
+    letter-spacing: 2px; 
     line-height: 1.2; 
     text-transform: uppercase;
 }
 
-/* --- CAMBIO 2: ESTILO SUPER ELEGANTE PARA EL ANIVERSARIO --- */
+/* ESTILO ELEGANTE PARA EL ANIVERSARIO */
 .aniversario-text {
     font-family: var(--font-stack);
     font-size: 0.7rem; 
-    font-weight: 300; /* Aún más delgado para sutileza */
+    font-weight: 300; 
     color: var(--color-crema);
     opacity: 0.9;
-    letter-spacing: 4px; /* **MUCHO MÁS ESPACIADO PARA ELEGANCIA** */
-    margin: 1px 0; /* Espaciado mínimo entre líneas */
+    letter-spacing: 4px; 
+    margin: 1px 0; 
     text-transform: uppercase;
-    line-height: 1; /* Para que las líneas estén muy juntas */
+    line-height: 1; 
 }
 
 .btn-login {
@@ -120,10 +119,11 @@ body {
     color: var(--color-fondo-principal);
 }
 
-/* Ajuste necesario para la sección Hero */
+/* Ajuste necesario para la sección Hero para compensar el Header más alto */
 .hero-section {
     position: relative;
-    padding-top: 100px; 
+    /* Aumentamos el padding para el header de 110px + un poco de margen */
+    padding-top: 120px; 
     overflow: hidden;
     box-shadow: inset 0 -100px 50px -50px var(--color-fondo-principal);
 }
@@ -132,7 +132,7 @@ body {
 /* Adaptación en móvil */
 @media (max-width: 600px) {
     .header {
-        min-height: 70px;
+        min-height: 80px; /* Ajuste para móvil */
         padding: 10px 5%;
     }
 
@@ -157,7 +157,7 @@ body {
     }
     
     .hero-section {
-        padding-top: 80px;
+        padding-top: 90px; /* Ajuste de padding-top para móvil */
     }
 }
 
