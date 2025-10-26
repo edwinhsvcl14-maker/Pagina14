@@ -205,37 +205,16 @@
             let currentSlideIndex = 0;
             let dots = [];
 
-            // Función para inicializar y recalcular posiciones y anchuras
-            const setupCarousel = () => {
-                // El width se debe calcular aquí dentro, y es el width del CONTENEDOR VISIBLE
-                const slideWidth = slides[0].parentElement.getBoundingClientRect().width;
-                
-                // 1. Posicionar las diapositivas usando la anchura calculada
-                slides.forEach((slide, index) => {
-                    // La posición left es un desplazamiento en píxeles.
-                    slide.style.left = slideWidth * index + 'px';
-                });
-
-                // 2. Crear los puntos (dots)
-                dotsContainer.innerHTML = '';
-                slides.forEach((_, index) => {
-                    const dot = document.createElement('span');
-                    dot.classList.add('dot');
-                    dotsContainer.appendChild(dot);
-                });
-                dots = Array.from(dotsContainer.children);
-                
-                // 3. Establecer el estado activo inicial
-                dots[currentSlideIndex].classList.add('active');
-            };
-            
-            // --- FUNCIÓN CENTRAL ---
+            // --- FUNCIÓN DE CÁLCULO DE ANCHURA Y MOVIMIENTO ---
             const moveToSlide = (index) => {
-                // 1. Encontrar la posición 'left' (ya calculada en setupCarousel) de la diapositiva objetivo
-                const amountToMove = slides[index].style.left;
+                // Obtenemos el ancho visible del contenedor, que es el ancho real de UNA diapositiva
+                const slideWidth = slides[0].getBoundingClientRect().width;
                 
-                // 2. Aplicar la transformación para mover el track
-                track.style.transform = 'translateX(-' + amountToMove + ')';
+                // Calculamos el desplazamiento total requerido (índice * ancho de una diapositiva)
+                const amountToMove = slideWidth * index;
+                
+                // Aplicamos la transformación. No dependemos de slide.style.left.
+                track.style.transform = 'translateX(-' + amountToMove + 'px)';
                 
                 // 3. Actualizar los puntos
                 dots.forEach((dot, idx) => {
@@ -243,18 +222,33 @@
                 });
             };
 
+            // --- FUNCIÓN DE CONFIGURACIÓN ---
+            const setupDots = () => {
+                dotsContainer.innerHTML = '';
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    dotsContainer.appendChild(dot);
+                });
+                dots = Array.from(dotsContainer.children);
+                dots[currentSlideIndex].classList.add('active');
+            };
+            
             // ----------------------------------------------------
-            // INICIALIZACIÓN (Utilizamos setTimeout para forzar el cálculo después del renderizado)
+            // INICIALIZACIÓN (Usamos 'load' para asegurar dimensiones correctas)
             // ----------------------------------------------------
             
-            const initializeAndMove = () => {
-                setupCarousel();
-                moveToSlide(currentSlideIndex);
-            };
+            // Configurar los puntos inmediatamente
+            setupDots();
 
-            // Inicializa inmediatamente y también después de un pequeño retraso
-            initializeAndMove(); 
-            window.addEventListener('load', initializeAndMove); // Vuelve a inicializar después de cargar todas las imágenes
+            // Esperar a que la ventana y todas las imágenes carguen antes de calcular
+            window.addEventListener('load', () => {
+                 // Inicializa la posición después de que el ancho sea 100% correcto
+                 moveToSlide(currentSlideIndex);
+            });
+            
+            // Si el load ya pasó o es muy rápido, lo inicializamos inmediatamente
+            moveToSlide(currentSlideIndex);
 
             // ----------------------------------------------------
             // EVENT LISTENERS
@@ -281,8 +275,7 @@
 
             // CORRECCIÓN DE DIMENSIONES AL REDIMENSIONAR
             window.addEventListener('resize', () => {
-                 setupCarousel(); 
-                 moveToSlide(currentSlideIndex);
+                 moveToSlide(currentSlideIndex); // Recalcula el ancho y mueve a la posición actual
             });
         });
     </script>
