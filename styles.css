@@ -181,6 +181,8 @@ body {
     transition: transform 0.5s ease-in-out;
     height: 100%;
     position: relative;
+    /* ESTO DEBE SER EXACTAMENTE 300% SI TIENES 3 DIAPOSITIVAS */
+    width: 300%; 
 }
 
 .carousel-slide {
