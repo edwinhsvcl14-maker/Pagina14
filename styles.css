@@ -1,16 +1,15 @@
-/* VARIABLES DE COLOR Y FUENTE (ACTUALIZADAS) */
+/* VARIABLES DE COLOR Y FUENTE */
 :root {
-    /* Degradado de marrón a crema (Colores solicitados) */
+    /* Degradado de marrón a crema */
     --color-marron-oscuro: #5D4037; 
     --color-crema: #F5F5DC;      
     
-    /* Colores base de la interfaz (ADAPTADOS: ahora usa marrón como fondo principal) */
-    --color-fondo-principal: var(--color-marron-oscuro); /* **NUEVO: MARRÓN OSCURO** */
-    --color-texto-principal: var(--color-crema);        /* **NUEVO: CREMA para contraste** */
-    --color-texto-secundario: #3e2723;                 /* Marrón más oscuro para textos en fondos claros */
-    --color-acento: #0072d2;                           /* Azul brillante (mantenido para botones de acción) */
+    /* Colores base de la interfaz */
+    --color-fondo-principal: var(--color-marron-oscuro); 
+    --color-texto-principal: var(--color-crema);        
+    --color-texto-secundario: #3e2723;                  /* Marrón más oscuro para textos en fondos claros */
+    --color-acento: #0072d2;                            /* Azul brillante (botón de acción) */
     --color-acento-hover: #1e87f0;
-    --color-separador: rgba(245, 245, 220, 0.2);       /* Crema semitransparente para separadores */
     
     --font-stack: 'Poppins', sans-serif;
 }
@@ -30,8 +29,6 @@ body {
     font-family: var(--font-stack);
     color: var(--color-texto-principal);
     min-height: 100vh;
-    /* --- FONDO DEGRADADO SOLICITADO --- */
-    /* El degradado va desde el marrón oscuro (arriba) hasta el crema (abajo) */
     background: linear-gradient(
         180deg, 
         var(--color-marron-oscuro) 0%, 
@@ -39,8 +36,8 @@ body {
     );
 }
 
-/* EFECTOS DE BOTONES COMUNES (SIN CAMBIOS) */
-.btn-login, .btn-cta, .btn-more {
+/* EFECTOS DE BOTONES COMUNES */
+.btn-login, .btn-more {
     font-family: var(--font-stack);
     text-transform: uppercase;
     font-weight: 600;
@@ -63,8 +60,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    /* Usa un marrón más oscuro o transparente sobre el fondo */
-    background-color: rgba(var(--color-marron-oscuro), 0.8); 
+    background-color: rgba(var(--color-marron-oscuro), 0.9); 
 }
 
 .logo {
@@ -87,159 +83,318 @@ body {
     color: var(--color-fondo-principal);
 }
 
-/* ============ HERO SECTION ============ */
+/* ============ HERO SECTION / CARRUSEL ============ */
 .hero-section {
-    min-height: 100vh;
+    position: relative;
+    padding-top: 80px; /* Espacio para el header fijo */
+    overflow: hidden; /* Oculta las diapositivas que no están en vista */
+    box-shadow: inset 0 -100px 50px -50px var(--color-fondo-principal);
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 92vh; /* Altura principal del carrusel */
+    max-height: 900px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+    position: relative;
+}
+
+.carousel-slide {
+    width: 100%;
+    flex-shrink: 0; /* Evita que las diapositivas se encojan */
+    height: 100%;
+    background-color: var(--color-fondo-principal);
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 100px 5%;
     text-align: center;
-    /* El fondo del Hero ahora es el color de fondo principal (Marrón Oscuro) */
-    background-color: transparent; 
+    /* Efecto de superposición oscura para que el texto se lea bien */
     position: relative;
-    /* Sombra para mezclar con el fondo degradado */
-    box-shadow: inset 0 -100px 50px -50px var(--color-fondo-principal); 
+}
+
+.carousel-slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .hero-content {
-    max-width: 650px;
+    max-width: 800px;
     padding: 20px;
-    /* Asegura que el texto contraste bien sobre el fondo marrón/imagen */
+    z-index: 10; /* Asegura que el contenido esté sobre la superposición */
     color: var(--color-texto-principal);
 }
 
-/* Formulario CTA y Botones (Sin cambios sustanciales en la interacción) */
-.cta-form {
-    display: flex;
-    max-width: 500px;
-    margin: 0 auto 15px;
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.cta-form input[type="email"] {
-    flex-grow: 1;
-    padding: 18px 20px;
+.hero-subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* CONTROLES DEL CARRUSEL */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
     border: none;
-    border-radius: 6px 0 0 6px;
-    font-size: 1rem;
-    /* Fondo claro para el input, borde sutil */
-    background-color: var(--color-crema); 
-    color: var(--color-texto-secundario);
+    padding: 15px 10px;
+    cursor: pointer;
+    z-index: 20;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
 }
 
-.btn-cta {
+.carousel-control:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 20px;
+    border-radius: 4px 0 0 4px;
+}
+
+.next {
+    right: 20px;
+    border-radius: 0 4px 4px 0;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.dot.active {
     background-color: var(--color-acento);
-    color: var(--color-texto-principal);
-    padding: 18px 30px;
-    border-radius: 0 6px 6px 0;
-    font-size: 1rem;
+    transform: scale(1.2);
 }
 
-.btn-cta:hover {
-    background-color: var(--color-acento-hover);
-}
-
-
-/* ============ SECCIÓN DE MARCAS (BRANDS) ============ */
+/* ============ MENÚ TEMÁTICO (Adaptación de Brands) ============ */
 .brands-section {
     display: flex;
     justify-content: center;
     gap: 20px;
     padding: 50px 5%;
-    /* Fondo para la sección de marcas */
-    background-color: var(--color-fondo-principal); 
+    background-color: var(--color-fondo-principal);
     max-width: 1400px;
     margin: 0 auto;
 }
 
-.brand-item {
-    flex-basis: 18%; 
+.menu-card {
+    flex-basis: 18%; /* Ajustado para 5 tarjetas */
     padding: 10px;
+    text-decoration: none;
+    /* Efecto hover */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.brand-item:hover {
-    transform: scale(1.05);
-    /* Sombra de brillo crema sobre fondo marrón */
-    box-shadow: 0 0 20px rgba(245, 245, 220, 0.4); 
+.menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .brand-image {
-    height: 100px;
+    height: 80px;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    border: 4px solid var(--brand-color, var(--color-crema)); /* Borde con color de marca o crema */
-    background-color: rgba(245, 245, 220, 0.1); /* Fondo muy sutil */
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-texto-principal);
+    /* Borde temático */
+    border: 3px solid var(--brand-color, var(--color-crema));
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ============ SECCIÓN DE SHOWCASE ============ */
+/* ============ SECCIONES DE CONTENIDO (SHOWCASE) ============ */
 .showcase-section {
-    padding: 100px 5%;
+    padding: 80px 5%;
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-start;
     align-items: center;
-    min-height: 500px;
-    background-attachment: fixed;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
     position: relative;
-    /* Nueva sombra de mezcla con el fondo crema */
-    box-shadow: inset 0 100px 50px -50px var(--color-fondo-principal), 
-                inset 0 -100px 50px -50px var(--color-crema);
 }
+
+/* Fondo alternativo para distinguir secciones (marrón oscuro) */
+.showcase-section.alt-bg {
+    background-color: var(--color-fondo-principal); 
+    color: var(--color-texto-principal);
+    justify-content: flex-end; /* Alineación opuesta */
+}
+
+/* Para la parte inferior (cerca del degradado crema) */
+#virgen {
+    background-color: transparent; 
+    color: var(--color-texto-secundario);
+    /* Sombras inversas para que el texto oscuro se lea en el fondo claro */
+    box-shadow: inset 0 100px 50px -50px var(--color-fondo-principal);
+}
+#virgen .showcase-card {
+    background-color: rgba(245, 245, 220, 0.7);
+    color: var(--color-texto-secundario);
+}
+#virgen .btn-more {
+    background-color: var(--color-texto-secundario);
+    color: var(--color-crema);
+}
+#virgen .btn-more:hover {
+    background-color: #795548;
+}
+
 
 .showcase-card {
-    max-width: 450px;
+    max-width: 550px;
     padding: 40px;
     text-align: left;
-    /* Fondo semitransparente para que el texto resalte */
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente oscuro */
     border-radius: 8px;
     color: var(--color-texto-principal);
+}
+
+.showcase-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.showcase-text {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.btn-more {
+    background-color: var(--color-acento);
+    color: var(--color-texto-principal);
+    padding: 12px 25px;
+    border-radius: 4px;
+}
+
+.btn-more:hover {
+    background-color: var(--color-acento-hover);
+    box-shadow: 0 0 10px var(--color-acento);
+}
+
+/* ============ SECCIÓN DIRECTIVA ============ */
+.directiva-section {
+    padding: 80px 5%;
+    text-align: center;
+    background-color: var(--color-fondo-principal);
+    color: var(--color-texto-principal);
+}
+
+.directiva-title {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+}
+
+.directiva-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.directivo-card {
+    width: 250px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.directivo-card:hover {
+    transform: translateY(-5px);
+}
+
+.directivo-photo {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(var(--color-crema), 0.2);
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    border: 3px solid var(--color-crema);
+}
+
+.directivo-card h3 {
+    margin-bottom: 5px;
 }
 
 /* ============ FOOTER ============ */
 .footer {
     padding: 40px 5%;
     text-align: center;
-    /* Fondo ahora es el color crema */
     background-color: var(--color-crema); 
-    color: var(--color-texto-secundario); /* Texto marrón oscuro para contraste con fondo crema */
+    color: var(--color-texto-secundario); 
 }
 
-.footer-logo {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 20px;
+/* ============ RESPONSIVE DESIGN ============ */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .brands-section {
+        flex-wrap: wrap;
+    }
+    .menu-card {
+        flex-basis: 30%; /* 3 columnas */
+    }
+    .showcase-section {
+        justify-content: center;
+    }
 }
 
-.footer-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px 30px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-}
-
-.footer-links a {
-    color: var(--color-texto-secundario); /* Texto marrón */
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.footer-links a:hover {
-    opacity: 0.7;
-}
-
-/* ============ RESPONSIVE DESIGN (MÓVILES) - Ajustes mínimos para colores ============ */
-@media (max-width: 768px) {
-    /* Mantenemos el responsive intacto, solo ajustando los colores del formulario */
-    .cta-form input[type="email"] {
-        border-radius: 6px; 
+@media (max-width: 600px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .menu-card {
+        flex-basis: 45%; /* 2 columnas */
+    }
+    .showcase-card {
+        max-width: 100%;
+        padding: 25px;
+        text-align: center;
     }
 }
