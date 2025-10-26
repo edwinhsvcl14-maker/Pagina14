@@ -323,14 +323,18 @@ body {
     height: 80px;
     border-radius: 8px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* Asegura centrado horizontal */
+    justify-content: center; 
+    /* Asegura centrado vertical */
+    align-items: center; 
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--color-texto-principal);
-    /* Borde temático */
     border: 3px solid var(--brand-color, var(--color-crema));
     background-color: rgba(255, 255, 255, 0.1);
+    
+    /* AÑADE ESTO: Centra el texto en múltiples líneas */
+    text-align: center; 
 }
 
 /* ============ SECCIONES DE CONTENIDO (SHOWCASE) ============ */
