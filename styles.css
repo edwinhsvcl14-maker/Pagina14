@@ -1,15 +1,17 @@
-/* VARIABLES DE COLOR */
+/* VARIABLES DE COLOR Y FUENTE */
 :root {
-    /* Degradado de marrón a crema */
-    --color-marron-oscuro: #5D4037; /* Marrón más oscuro */
-    --color-crema: #F5F5DC;      /* Beige o Crema */
+    /* Degradado de marrón a crema (Colores solicitados) */
+    --color-marron-oscuro: #5D4037; 
+    --color-crema: #F5F5DC;      
     
-    /* Colores de interfaz (simulando apps de streaming) */
-    --color-texto-claro: #F0F0F0;
-    --color-texto-principal: #FFFFFF;
-    --color-acento: #007bff; /* Azul vibrante (como botón de suscripción) */
-    --color-acento-hover: #0056b3;
-    --color-fondo-tarjeta: rgba(0, 0, 0, 0.4);
+    /* Colores base de la interfaz (simulando Disney+) */
+    --color-fondo-principal: #040714; /* Azul muy oscuro/negro */
+    --color-texto-principal: #F9F9F9;
+    --color-acento: #0072d2; /* Azul brillante de Disney+ */
+    --color-acento-hover: #1e87f0;
+    --color-separador: rgba(249, 249, 249, 0.1);
+    
+    --font-stack: 'Poppins', sans-serif;
 }
 
 /* ESTILOS GLOBALES Y FONDO DEGRADADO */
@@ -19,23 +21,44 @@
     padding: 0;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    color: var(--color-texto-claro);
-    min-height: 100vh;
-    /* --- FONDO DEGRADADO REQUERIDO: MARRÓN A CREMA --- */
-    background: linear-gradient(180deg, var(--color-marron-oscuro) 0%, var(--color-crema) 100%);
-    /* Asegura que el texto en la parte clara sea legible */
-    color: var(--color-marron-oscuro); 
+html {
+    scroll-behavior: smooth;
 }
 
-/* ESTRUCTURA DEL ENCABEZADO (HEADER) */
+body {
+    font-family: var(--font-stack);
+    color: var(--color-texto-principal);
+    min-height: 100vh;
+    /* --- FONDO DEGRADADO SOLICITADO --- */
+    /* La capa oscura inicial cubre la mayor parte para simular la app de streaming */
+    background: linear-gradient(
+        180deg, 
+        var(--color-fondo-principal) 0%, 
+        var(--color-fondo-principal) 70%, 
+        var(--color-marron-oscuro) 85%,
+        var(--color-crema) 100%
+    );
+}
+
+/* EFECTOS DE BOTONES COMUNES */
+.btn-login, .btn-cta, .btn-more {
+    font-family: var(--font-stack);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* ============ HEADER ============ */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 5%;
-    background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente */
     position: fixed;
     top: 0;
     left: 0;
@@ -44,235 +67,256 @@ body {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--color-texto-principal);
+    letter-spacing: 1.5px;
 }
 
-.nav-link {
+.btn-login {
+    background-color: transparent;
     color: var(--color-texto-principal);
-    text-decoration: none;
-    margin-right: 20px;
-    transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: #999;
-}
-
-.btn-subscribe {
-    background-color: var(--color-acento);
-    color: white;
-    padding: 8px 15px;
-    text-decoration: none;
+    border: 1px solid var(--color-texto-principal);
+    padding: 8px 18px;
     border-radius: 4px;
-    font-weight: bold;
-    transition: background-color 0.3s;
 }
 
-.btn-subscribe:hover {
-    background-color: var(--color-acento-hover);
+.btn-login:hover {
+    background-color: var(--color-texto-principal);
+    color: var(--color-fondo-principal);
 }
 
-/* SECCIÓN PRINCIPAL (HERO) */
-.hero {
+/* ============ HERO SECTION ============ */
+.hero-section {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 100px 5% 50px; /* Ajusta padding para el header fijo */
+    padding: 100px 5%;
     text-align: center;
+    /* Fondo con efecto similar a la imagen grande de Disney+ */
+    background: url('placeholder-bg.jpg') no-repeat center center/cover; /* Usarás una imagen de fondo real aquí */
+    background-color: var(--color-fondo-principal); 
+    position: relative;
+    /* Efecto de sombra oscura para resaltar el texto */
+    box-shadow: inset 0 -100px 50px -50px var(--color-fondo-principal);
 }
 
 .hero-content {
-    max-width: 700px;
+    max-width: 650px;
+    padding: 20px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.cta-form {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto 15px;
+}
+
+.cta-form input[type="email"] {
+    flex-grow: 1;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 6px 0 0 6px;
+    font-size: 1rem;
+}
+
+.btn-cta {
+    background-color: var(--color-acento);
     color: var(--color-texto-principal);
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para que el texto resalte */
+    padding: 18px 30px;
+    border-radius: 0 6px 6px 0;
+    font-size: 1rem;
+}
+
+.btn-cta:hover {
+    background-color: var(--color-acento-hover);
+}
+
+.terms-text {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* ============ SECCIÓN DE MARCAS (BRANDS) ============ */
+.brands-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 50px 5%;
+    background-color: var(--color-fondo-principal);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.brand-item {
+    flex-basis: 18%; /* Simula 5 columnas */
+    padding: 10px;
+    /* EFECTO HOVER DE EXPANDIR (similar al original) */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.brand-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.brand-image {
+    height: 100px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* Borde colorido para simular las marcas (Marvel, Star Wars, etc.) */
+    border: 4px solid var(--brand-color, #fff);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ============ SECCIÓN DE SHOWCASE ============ */
+.showcase-section {
+    padding: 100px 5%;
+    display: flex;
+    justify-content: flex-end; /* Alineación a la derecha como en Disney+ */
+    align-items: center;
+    min-height: 500px;
+    /* Usarás una imagen grande de fondo aquí para simular el contenido */
+    background: url('placeholder-showcase.jpg') no-repeat center center/cover;
+    background-attachment: fixed; /* Pequeño efecto de parallax */
+    position: relative;
+}
+
+.showcase-card {
+    max-width: 450px;
     padding: 40px;
-    border-radius: 10px;
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
 }
 
-.hero-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+.showcase-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
-.hero-content p {
+.showcase-text {
     font-size: 1.1rem;
     margin-bottom: 25px;
 }
 
-.cta-text {
-    font-weight: bold;
-    margin-top: 30px;
-}
-
-.email-form {
-    display: flex;
-    margin: 20px 0;
-}
-
-.email-form input[type="email"] {
-    flex-grow: 1;
-    padding: 15px;
-    border: none;
-    border-radius: 5px 0 0 5px;
-    font-size: 1rem;
-}
-
-.btn-main {
+.btn-more {
     background-color: var(--color-acento);
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    color: var(--color-texto-principal);
+    padding: 12px 25px;
+    border-radius: 4px;
 }
 
-.btn-main:hover {
+.btn-more:hover {
     background-color: var(--color-acento-hover);
+    box-shadow: 0 0 10px var(--color-acento);
 }
 
-.terms {
-    font-size: 0.8rem;
-    opacity: 0.8;
-}
-
-/* SECCIÓN DE CONTENIDO (SHOWCASE) */
-.content-showcase {
-    padding: 50px 5%;
-    text-align: center;
-    color: var(--color-marron-oscuro); /* Texto más oscuro para la parte clara del fondo */
-}
-
-.content-showcase h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-}
-
-.showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas en desktop */
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.card {
-    background-color: var(--color-fondo-tarjeta);
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card-placeholder {
-    height: 150px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-texto-principal);
-    font-weight: bold;
-}
-
-.card p {
-    font-size: 0.9rem;
-    color: var(--color-texto-principal);
-}
-
-/* PIE DE PÁGINA (FOOTER) */
+/* ============ FOOTER ============ */
 .footer {
-    background-color: var(--color-marron-oscuro);
-    color: var(--color-crema);
-    padding: 30px 5%;
+    padding: 40px 5%;
     text-align: center;
-    font-size: 0.9rem;
+    background-color: transparent; /* Permite ver el degradado marrón/crema */
+    color: var(--color-marron-oscuro); /* Texto oscuro para contraste con el fondo claro */
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .footer-links a {
-    color: var(--color-crema);
-    margin: 0 10px;
+    color: var(--color-marron-oscuro);
     text-decoration: none;
-    transition: opacity 0.3s;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
 }
 
 .footer-links a:hover {
     opacity: 0.7;
 }
 
-.footer p {
-    margin-top: 15px;
+.footer-copy {
+    font-size: 0.8rem;
+    opacity: 0.8;
 }
 
-/* --- DISEÑO RESPONSIVE (ADAPTACIÓN A MÓVILES) --- */
 
-/* Para tablets (pantallas hasta 992px) */
-@media (max-width: 992px) {
-    .showcase-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+/* ============ RESPONSIVE DESIGN (MÓVILES) ============ */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.2rem;
     }
-}
 
-/* Para móviles (pantallas hasta 600px) */
-@media (max-width: 600px) {
-    .header {
+    .cta-form {
         flex-direction: column;
-        text-align: center;
-        padding: 15px 5%;
-        position: static; /* Quita el fixed en móvil para mejor navegación */
+        max-width: 100%;
     }
 
-    .nav {
-        margin-top: 10px;
-    }
-
-    .nav-link {
-        margin: 0 5px;
-        font-size: 0.9rem;
-    }
-
-    .btn-subscribe {
-        display: block;
-        margin-top: 10px;
-        padding: 10px;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .email-form {
-        flex-direction: column; /* Apila el input y el botón */
-    }
-
-    .email-form input[type="email"],
-    .btn-main {
+    .cta-form input[type="email"],
+    .btn-cta {
         width: 100%;
-        border-radius: 5px; /* Bordes redondeados completos */
+        border-radius: 6px; /* Bordes completos */
         margin-bottom: 10px;
     }
+    
+    .btn-cta {
+        margin-left: 0;
+    }
 
-    .btn-main {
-        padding: 12px;
+    .brands-section {
+        /* Pasa a dos columnas en móvil */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
     
-    .showcase-grid {
-        grid-template-columns: 1fr; /* 1 columna */
+    .brand-item {
+        flex-basis: 45%;
+    }
+    
+    .showcase-section {
+        justify-content: center; /* Centra el contenido en móvil */
+        background-attachment: scroll;
     }
 
-    .footer-links a {
-        display: block;
-        margin: 5px 0;
+    .showcase-card {
+        max-width: 100%;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .footer-links {
+        gap: 10px 20px;
     }
 }
