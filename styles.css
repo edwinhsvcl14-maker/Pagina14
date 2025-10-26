@@ -56,15 +56,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 5%; /* Reducimos el padding vertical y aumentamos el ancho por la altura total */
-    min-height: 90px; /* **AUMENTA EL TAMAÑO DE LA FRANJA MARRÓN** */
+    padding: 10px 5%; 
+    min-height: 90px; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: rgba(var(--color-marron-oscuro), 0.95); /* Opacidad alta para un color sólido */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra elegante */
+    background-color: rgba(var(--color-marron-oscuro), 0.95); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
 .logo-container {
@@ -73,7 +73,7 @@ body {
 }
 
 .logo-img {
-    height: 60px; /* Tamaño del logo */
+    height: 60px; 
     width: auto;
     margin-right: 15px;
 }
@@ -81,27 +81,30 @@ body {
 .logo-text-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    /* --- CAMBIO 1: CENTRAR TODO EL TEXTO --- */
+    align-items: center; 
 }
 
 .logo {
-    font-size: 1.6rem; /* Un poco más grande para el nombre principal */
+    font-size: 1.6rem; 
     font-weight: 700;
     color: var(--color-texto-principal);
-    letter-spacing: 1.5px;
-    line-height: 1; /* Para que esté cerca del texto de abajo */
+    letter-spacing: 2px; /* Ligeramente más espaciado para la elegancia */
+    line-height: 1.2; 
+    text-transform: uppercase;
 }
 
-/* ESTILO ELEGANTE PARA EL TEXTO DEL ANIVERSARIO */
+/* --- CAMBIO 2: ESTILO SUPER ELEGANTE PARA EL ANIVERSARIO --- */
 .aniversario-text {
     font-family: var(--font-stack);
-    font-size: 0.75rem; /* Letra pequeña y elegante */
-    font-weight: 400; /* Más delgado */
+    font-size: 0.7rem; 
+    font-weight: 300; /* Aún más delgado para sutileza */
     color: var(--color-crema);
-    opacity: 0.8;
-    letter-spacing: 2.5px; /* Espaciado que le da el toque elegante */
-    margin-top: 3px;
+    opacity: 0.9;
+    letter-spacing: 4px; /* **MUCHO MÁS ESPACIADO PARA ELEGANCIA** */
+    margin: 1px 0; /* Espaciado mínimo entre líneas */
     text-transform: uppercase;
+    line-height: 1; /* Para que las líneas estén muy juntas */
 }
 
 .btn-login {
@@ -117,10 +120,9 @@ body {
     color: var(--color-fondo-principal);
 }
 
-/* Ajuste necesario para la sección Hero para que no quede debajo del Header más alto */
+/* Ajuste necesario para la sección Hero */
 .hero-section {
     position: relative;
-    /* Antes era 80px, ahora lo aumentamos para el header más alto */
     padding-top: 100px; 
     overflow: hidden;
     box-shadow: inset 0 -100px 50px -50px var(--color-fondo-principal);
@@ -140,12 +142,13 @@ body {
     }
 
     .logo {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
     }
     
     .aniversario-text {
-        font-size: 0.6rem;
-        letter-spacing: 1.5px;
+        font-size: 0.55rem;
+        letter-spacing: 2.5px;
     }
 
     .btn-login {
