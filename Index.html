@@ -203,16 +203,18 @@
             const prevButton = document.querySelector('.carousel-control.prev');
             const dotsContainer = document.querySelector('.carousel-dots');
             
+            // --- CÁLCULO INICIAL Y REQUERIDO ---
+            // Aseguramos que todas las diapositivas tengan la misma anchura para el cálculo
             const slideWidth = slides[0].getBoundingClientRect().width;
-            let currentSlideIndex = 0;
-
-            // Organizar las diapositivas horizontalmente
+            
+            // Posicionar las diapositivas
             const setSlidePosition = (slide, index) => {
                 slide.style.left = slideWidth * index + 'px';
             };
             slides.forEach(setSlidePosition);
 
             // Crear los puntos (dots)
+            let currentSlideIndex = 0;
             slides.forEach((_, index) => {
                 const dot = document.createElement('span');
                 dot.classList.add('dot');
@@ -221,36 +223,35 @@
             });
             const dots = Array.from(dotsContainer.children);
 
-            // Mover a la diapositiva
-            const moveToSlide = (track, currentSlide, targetSlide) => {
-                track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
-                currentSlide.classList.remove('current-slide');
-                targetSlide.classList.add('current-slide');
+            // --- FUNCIÓN CENTRAL CORREGIDA ---
+            const moveToSlide = (index) => {
+                // Calculamos cuánto se tiene que desplazar el 'track' completo
+                const amountToMove = slides[index].style.left;
+                
+                // Aplicamos la transformación
+                track.style.transform = 'translateX(-' + amountToMove + ')';
+                
+                // Actualizar los puntos
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === index);
+                });
             };
 
-            const updateDots = (currentDot, targetDot) => {
-                currentDot.classList.remove('active');
-                targetDot.classList.add('active');
-            };
+            // Mover a la primera diapositiva al cargar
+            moveToSlide(currentSlideIndex);
 
             // Cuando se hace clic en siguiente
             nextButton.addEventListener('click', e => {
-                const currentSlide = slides[currentSlideIndex];
+                // Avanzamos el índice, volviendo a 0 si llegamos al final (loop)
                 currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-                const targetSlide = slides[currentSlideIndex];
-
-                moveToSlide(track, currentSlide, targetSlide);
-                updateDots(dots.find(d => d.classList.contains('active')), dots[currentSlideIndex]);
+                moveToSlide(currentSlideIndex);
             });
 
             // Cuando se hace clic en anterior
             prevButton.addEventListener('click', e => {
-                const currentSlide = slides[currentSlideIndex];
+                // Retrocedemos el índice, usando (índice - 1 + longitud) % longitud para manejar el loop
                 currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-                const targetSlide = slides[currentSlideIndex];
-
-                moveToSlide(track, currentSlide, targetSlide);
-                updateDots(dots.find(d => d.classList.contains('active')), dots[currentSlideIndex]);
+                moveToSlide(currentSlideIndex);
             });
 
             // Navegación por puntos
@@ -258,13 +259,10 @@
                 if (!e.target.classList.contains('dot')) return;
                 
                 const targetDot = e.target;
-                const targetIndex = dots.findIndex(dot => dot === targetDot);
-                const currentSlide = slides[currentSlideIndex];
-                const targetSlide = slides[targetIndex];
+                const targetIndex = dots.indexOf(targetDot); // Obtiene el índice del punto clicado
 
                 currentSlideIndex = targetIndex;
-                moveToSlide(track, currentSlide, targetSlide);
-                updateDots(dots.find(d => d.classList.contains('active')), targetDot);
+                moveToSlide(currentSlideIndex);
             });
         });
     </script>
