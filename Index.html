@@ -195,74 +195,94 @@
         </div>
     </footer>
 
-    <script>
+   <script>
         document.addEventListener('DOMContentLoaded', () => {
             const track = document.querySelector('.carousel-track');
             const slides = Array.from(track.children);
             const nextButton = document.querySelector('.carousel-control.next');
             const prevButton = document.querySelector('.carousel-control.prev');
             const dotsContainer = document.querySelector('.carousel-dots');
-            
-            // --- CÁLCULO INICIAL Y REQUERIDO ---
-            // Aseguramos que todas las diapositivas tengan la misma anchura para el cálculo
-            const slideWidth = slides[0].getBoundingClientRect().width;
-            
-            // Posicionar las diapositivas
-            const setSlidePosition = (slide, index) => {
-                slide.style.left = slideWidth * index + 'px';
-            };
-            slides.forEach(setSlidePosition);
-
-            // Crear los puntos (dots)
             let currentSlideIndex = 0;
-            slides.forEach((_, index) => {
-                const dot = document.createElement('span');
-                dot.classList.add('dot');
-                if (index === 0) dot.classList.add('active');
-                dotsContainer.appendChild(dot);
-            });
-            const dots = Array.from(dotsContainer.children);
+            let dots = [];
 
-            // --- FUNCIÓN CENTRAL CORREGIDA ---
+            // Función para inicializar y recalcular posiciones y anchuras
+            const setupCarousel = () => {
+                // El width se debe calcular aquí dentro, y es el width del CONTENEDOR VISIBLE
+                const slideWidth = slides[0].parentElement.getBoundingClientRect().width;
+                
+                // 1. Posicionar las diapositivas usando la anchura calculada
+                slides.forEach((slide, index) => {
+                    // La posición left es un desplazamiento en píxeles.
+                    slide.style.left = slideWidth * index + 'px';
+                });
+
+                // 2. Crear los puntos (dots)
+                dotsContainer.innerHTML = '';
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    dotsContainer.appendChild(dot);
+                });
+                dots = Array.from(dotsContainer.children);
+                
+                // 3. Establecer el estado activo inicial
+                dots[currentSlideIndex].classList.add('active');
+            };
+            
+            // --- FUNCIÓN CENTRAL ---
             const moveToSlide = (index) => {
-                // Calculamos cuánto se tiene que desplazar el 'track' completo
+                // 1. Encontrar la posición 'left' (ya calculada en setupCarousel) de la diapositiva objetivo
                 const amountToMove = slides[index].style.left;
                 
-                // Aplicamos la transformación
+                // 2. Aplicar la transformación para mover el track
                 track.style.transform = 'translateX(-' + amountToMove + ')';
                 
-                // Actualizar los puntos
+                // 3. Actualizar los puntos
                 dots.forEach((dot, idx) => {
                     dot.classList.toggle('active', idx === index);
                 });
             };
 
-            // Mover a la primera diapositiva al cargar
-            moveToSlide(currentSlideIndex);
+            // ----------------------------------------------------
+            // INICIALIZACIÓN (Utilizamos setTimeout para forzar el cálculo después del renderizado)
+            // ----------------------------------------------------
+            
+            const initializeAndMove = () => {
+                setupCarousel();
+                moveToSlide(currentSlideIndex);
+            };
 
-            // Cuando se hace clic en siguiente
-            nextButton.addEventListener('click', e => {
-                // Avanzamos el índice, volviendo a 0 si llegamos al final (loop)
+            // Inicializa inmediatamente y también después de un pequeño retraso
+            initializeAndMove(); 
+            window.addEventListener('load', initializeAndMove); // Vuelve a inicializar después de cargar todas las imágenes
+
+            // ----------------------------------------------------
+            // EVENT LISTENERS
+            // ----------------------------------------------------
+            nextButton.addEventListener('click', () => {
                 currentSlideIndex = (currentSlideIndex + 1) % slides.length;
                 moveToSlide(currentSlideIndex);
             });
 
-            // Cuando se hace clic en anterior
-            prevButton.addEventListener('click', e => {
-                // Retrocedemos el índice, usando (índice - 1 + longitud) % longitud para manejar el loop
+            prevButton.addEventListener('click', () => {
                 currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
                 moveToSlide(currentSlideIndex);
             });
 
-            // Navegación por puntos
             dotsContainer.addEventListener('click', e => {
                 if (!e.target.classList.contains('dot')) return;
                 
                 const targetDot = e.target;
-                const targetIndex = dots.indexOf(targetDot); // Obtiene el índice del punto clicado
+                const targetIndex = dots.indexOf(targetDot);
 
                 currentSlideIndex = targetIndex;
                 moveToSlide(currentSlideIndex);
+            });
+
+            // CORRECCIÓN DE DIMENSIONES AL REDIMENSIONAR
+            window.addEventListener('resize', () => {
+                 setupCarousel(); 
+                 moveToSlide(currentSlideIndex);
             });
         });
     </script>
